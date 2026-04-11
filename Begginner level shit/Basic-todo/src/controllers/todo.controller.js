@@ -1,4 +1,4 @@
-import todoModel from "../models/todo.model"
+import todoModel from "../models/todo.model.js"
 
 export async function createTodo(req,res){
     try{
