@@ -62,9 +62,57 @@ export async function getCategoryByID(req,res){
 }
 
 export async function updateCategory(req,res){
+    try{
+        const category= await categoryModel.findByIdAndUpdate(req.params.id,
+            req.body,
+            {new:true,runValidators:true}
+        );
+        if(!category)
+        {
+            return res.status(404).json({
+                success:false,
+                message:"not found"
+            })
+        }
+        res.status(200).json({
+            success:true,
+            data:category,
+            message:"The category is updated sucessfully"
+        })
+
+    }
+    catch(err){
+        res.status(500).json({
+            success:false,
+            message:err.message
+        })
+    }
     
 
 }
 export async function deleteCategory(req,res){
+    try{
+        const category=await categoryModel.findByIdAndDelete(
+            req.params.id
+        )
+        if(!category){
+            return res.status(404).json({
+                success:false,
+                message:"category is not found"
+            })
+        }
+        res.status(200).json({
+            success:true,
+            data:category,
+            message:"The category is deleted successfully"
+        })
+
+    }
+    catch(err){
+        res.status(500).json({
+            success:false,
+            message:err.message
+        })
+    }
 
 }
